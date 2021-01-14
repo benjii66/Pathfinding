@@ -11,12 +11,11 @@ public class AS_AStar : MonoBehaviour
     AS_Node current = null;
     AS_Node successors = null;
     List<AS_Node> openList = new List<AS_Node>();
-
     // Start is called before the first frame update
     void Start()
     {
         start.G = 0;
-        InitGrid();
+     
 
     }
 
@@ -60,44 +59,6 @@ public class AS_AStar : MonoBehaviour
 
 
 
-    int size = 4;
-
-
-    public int GridSize => size;
-
-    public void InitGrid()
-    {
-       List<AS_Node> listeh = new List<AS_Node>();
-        for (int _x = 0; _x < openList.Count; _x++)
-            for (int _z = 0; _z < openList.Count; _z++)
-            {
-                AS_Node _node = null;
-                AStarTreatment();
-                OnGridReady?.Invoke(_node);
-            }
-
-    }
-
-    void OnDestroy()
-    {
-        OnGridReady = null;
-    }
-
-    //FINIR GRILLE(AVEC SUCCESSOR) ET SI ON EST OK ON FAIT L'ALGO
-
-
-    private void OnDrawGizmos()
-    {
-        for (int _x = 0; _x < size; _x++)
-        {
-            for (int _z = 0; _z < size; _z++)
-            {
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawWireCube(transform.position + new Vector3(_x, 0, _z), Vector3.one * .5f);
-
-            }
-        }
-    }
 
 
 }
