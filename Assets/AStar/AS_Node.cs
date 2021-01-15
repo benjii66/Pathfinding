@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AS_Node 
+public class AS_Node
 {
-
+ 
     public Vector3 Position { get; private set; } = Vector3.zero;
 
+    
+    //public bool IsObstacle => Volume.position.x = Position.x; 
     public bool IsNaviguable { get; private set; } = true;
+
+    public void SetNaviguable(bool _status) => IsNaviguable = _status;
 
     //F != infini = ça a déjà été parcouru
     public float F => G + H; //poids total des deux
@@ -24,9 +28,41 @@ public class AS_Node
 
 
     }
+    public void ResetCost()
+    {
+        G = float.MaxValue;
+        H = float.MaxValue;
+    }
 
-    public void AddSuccessors(AS_Node _node)=> Successors.Add(_node);
-    
+    public void AddSuccessors(AS_Node _node) => Successors.Add(_node);
+
+    public void DrawNode()
+    {
+        Gizmos.color = IsNaviguable ? Color.white : Color.red;
+        if (IsNaviguable)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(Position, .1f);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(Position + Vector3.up, .1f);
+        }
+
+    }
+
+    public void DrawSuccessors()
+    {
+        for (int j = 0; j < Successors.Count; j++)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(Position, Successors[j].Position);
+
+        }
+        Gizmos.color = Color.white;
+    }
+
 }
 
 /**

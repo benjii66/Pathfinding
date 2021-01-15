@@ -5,7 +5,6 @@ using System;
 
 public class AS_AStar : MonoBehaviour
 {
-    public event Action<AS_Node> OnGridReady = null;
     AS_Node start = null;
     AS_Node end = null;
     AS_Node current = null;
@@ -14,6 +13,7 @@ public class AS_AStar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //null ref car non implémentée
         start.G = 0;
      
 
@@ -42,7 +42,7 @@ public class AS_AStar : MonoBehaviour
                     float _G = current.G + Vector3.Distance(current.Position, current.Successors[i].Position);
                     if (_G < current.Successors[i].G)
                     {
-                        current.Successors[i] = current;
+                        current.Successors[i].Predecessor = current;
                         current.Successors[i].G = _G;
                         current.Successors[i].H = Vector3.Distance(current.Position, end.Position);
                         if (successors.Successors[i] != openList[i])
